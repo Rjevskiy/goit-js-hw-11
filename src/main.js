@@ -2,17 +2,14 @@ import { fetchImages } from './js/pixabay-api.js';
 import { displayImages } from './js/render-functions.js';
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
-import SimpleLightbox from "simplelightbox"; 
-import "simplelightbox/dist/simple-lightbox.min.css"; 
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const form = document.getElementById('search-form');
 const input = document.getElementById('search-input');
-// Индикатор загрузки
-const loader = document.getElementById('loader'); 
-let lightbox;
-
-// SimpleLightbox
-lightbox = new SimpleLightbox('.gallery-item a', {
+const loader = document.getElementById('loader');
+const gallery = document.getElementById('gallery');
+let lightbox = new SimpleLightbox('.gallery-item a', {
     captions: true,
     captionsData: 'alt',
     captionDelay: 250
@@ -22,7 +19,6 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
     const query = input.value.trim();
 
-// Проверяем на пустой запрос
     if (!query) {
         iziToast.warning({
             title: "Warning",
@@ -32,12 +28,12 @@ form.addEventListener('submit', (event) => {
         return;
     }
 
-// Показываем индикатор загрузки
-    loader.style.display = 'block'; 
+// Показать индикатор загрузки и очистить предыдущие результаты
+    loader.style.display = 'block';
+    gallery.innerHTML = '';
 
     fetchImages(query)
         .then(images => {
-// Проверяем на пустой массив
             if (images.length === 0) {
                 iziToast.info({
                     title: "Sorry",
@@ -46,10 +42,8 @@ form.addEventListener('submit', (event) => {
                 });
                 return;
             }
-
-// Отображаем изображений 
-            displayImages(images);
 // Обновляем SimpleLightbox 
+            displayImages(images);
             lightbox.refresh(); 
         })
         .catch(error => {
@@ -59,7 +53,7 @@ form.addEventListener('submit', (event) => {
                 position: 'topRight'
             });
         })
-// Убираем индикатор загрузки        
+// Скрываем индикатор загрузки        
         .finally(() => {
             loader.style.display = 'none'; 
         });

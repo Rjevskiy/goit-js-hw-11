@@ -9,6 +9,5 @@ export async function fetchImages(query) {
         throw new Error('Ошибка при получении данных');
     }
     const data = await response.json();
-// Возвращаем только массив изображений
     return data.hits; 
 }

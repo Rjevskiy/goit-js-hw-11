@@ -1,10 +1,6 @@
-
-// контейнер для галереи
 export function displayImages(images) {
-    const gallery = document.getElementById('gallery'); 
-// чистим содержимое галереи    
+    const gallery = document.getElementById('gallery');
     gallery.innerHTML = ''; 
-
     const markup = images.map(image => `
         <div class="gallery-item">
             <a href="${image.largeImageURL}" class="lightbox">
@@ -19,5 +15,5 @@ export function displayImages(images) {
         </div>
     `).join('');
 
-    gallery.innerHTML = markup; 
+    gallery.innerHTML = markup;
 }
