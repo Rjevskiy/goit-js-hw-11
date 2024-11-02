@@ -1,4 +1,4 @@
-// pixabay-api.js
+
 export async function fetchImages(query) {
     const API_KEY = '46859112-8db04929d193e6e9d044d366e';
     const BASE_URL = 'https://pixabay.com/api/';
@@ -9,5 +9,6 @@ export async function fetchImages(query) {
         throw new Error('Ошибка при получении данных');
     }
     const data = await response.json();
-    return data.hits; // Возвращаем только массив изображений
+// Возвращаем только массив изображений
+    return data.hits; 
 }

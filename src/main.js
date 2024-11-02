@@ -1,28 +1,29 @@
-// main.js
+
 import { fetchImages } from './js/pixabay-api.js';
 import { displayImages } from './js/render-functions.js';
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
-import SimpleLightbox from "simplelightbox"; // Импорт SimpleLightbox
-import "simplelightbox/dist/simple-lightbox.min.css"; // Импорт стилей SimpleLightbox
+import SimpleLightbox from "simplelightbox"; 
+import "simplelightbox/dist/simple-lightbox.min.css"; 
 
 const form = document.getElementById('search-form');
 const input = document.getElementById('search-input');
-const loader = document.getElementById('loader'); // Индикатор загрузки
+const loader = document.getElementById('loader'); 
+
 let lightbox;
 
 // Инициализация SimpleLightbox
 lightbox = new SimpleLightbox('.gallery-item a', {
     captions: true,
     captionsData: 'alt',
-    captionDelay: 250
+    captionDelay: 150
 });
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const query = input.value.trim();
 
-    // Проверка на пустой запрос
+// Проверяем на пустой запрос
     if (!query) {
         iziToast.warning({
             title: "Warning",
@@ -31,12 +32,12 @@ form.addEventListener('submit', async (event) => {
         });
         return;
     }
-
+// Показываем индикатор загрузки
     try {
-        loader.style.display = 'block'; // Показать индикатор загрузки
+        loader.style.display = 'block'; 
         const images = await fetchImages(query);
 
-        // Проверка на пустой массив
+// Проверяем пустой массив
         if (images.length === 0) {
             iziToast.info({
                 title: "Sorry",
@@ -45,16 +46,17 @@ form.addEventListener('submit', async (event) => {
             });
             return;
         }
-
+// Обновить SimpleLightbox после добавления новых img
         displayImages(images);
-        lightbox.refresh(); // Обновить SimpleLightbox после добавления новых изображений
+        lightbox.refresh(); 
     } catch (error) {
         iziToast.error({
             title: "Error",
             message: "Failed to fetch images. Please try again later.",
             position: 'topRight'
         });
+// Удаляем индикатор загрузки
     } finally {
-        loader.style.display = 'none'; // Скрыть индикатор загрузки
+        loader.style.display = 'none'; 
     }
 });

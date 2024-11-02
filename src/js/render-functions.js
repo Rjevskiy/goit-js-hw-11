@@ -1,11 +1,9 @@
-// render-functions.js
-/**
- * Відображає зображення в галереї
- * @param {Array} images - масив об'єктів з зображеннями
- */
+
+// контейнер для галереи
 export function displayImages(images) {
-    const gallery = document.getElementById('gallery'); // ваш контейнер для галереї
-    gallery.innerHTML = ''; // Очищення вмісту галереї
+    const gallery = document.getElementById('gallery'); 
+// чистим содержимое галереи    
+    gallery.innerHTML = ''; 
 
     const markup = images.map(image => `
         <div class="gallery-item">
@@ -21,5 +19,5 @@ export function displayImages(images) {
         </div>
     `).join('');
 
-    gallery.innerHTML = markup; // Додаємо нову розмітку в контейнер галереї
+    gallery.innerHTML = markup; 
 }
